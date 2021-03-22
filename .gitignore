@@ -5,6 +5,9 @@ build/
 !**/src/main/**
 !**/src/test/**
 /bin
+/gradlew
+/gradlew.bat
+/libs
 
 ### STS ###
 .apt_generated
@@ -31,6 +34,3 @@ out/
 
 ### VS Code ###
 .vscode/
-/gradlew
-/gradlew.bat
-/libs
