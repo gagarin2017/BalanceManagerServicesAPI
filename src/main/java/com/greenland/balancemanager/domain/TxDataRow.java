@@ -1,6 +1,7 @@
 package com.greenland.balancemanager.domain;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -12,12 +13,20 @@ import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.greenland.balancemanager.utils.TxDataRowJsonDeserializer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Builder
@@ -25,6 +34,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
+@JsonIdentityReference(alwaysAsId = true)
+@JsonDeserialize(using = TxDataRowJsonDeserializer.class)
+@ToString
 public class TxDataRow {
 
 	@Id
@@ -32,13 +45,13 @@ public class TxDataRow {
 	private Long id;
 	
 	@JsonFormat(pattern = "dd-MM-yyyy")
-	private Date txDate;
+	private LocalDate date;
 	
 	@NotBlank(message = "Account name is required")
-	private String accountName;
+	private String account;
 	
 	@NotBlank(message = "Category name is required")
-	private String categoryName;
+	private String category;
 
 	private BigDecimal debitAmount;
 	
@@ -64,5 +77,11 @@ public class TxDataRow {
 	protected void onUpdate() {
 		this.updated_At = new Date();
 	}
+	
+	private String description;
+	private String clr;
+	private String amount;
+	private String memo;
+	private String tag;
 	
 }

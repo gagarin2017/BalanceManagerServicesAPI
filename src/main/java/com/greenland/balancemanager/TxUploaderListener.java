@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import com.greenland.balanceManager.java.app.exceptions.TransactionsNotFoundAtSourceException;
 import com.greenland.balancemanager.services.TransactionSynchService;
 
 /**
@@ -23,7 +24,12 @@ public class TxUploaderListener implements ApplicationListener<ApplicationReadyE
 	
 	@Override
 	public void onApplicationEvent(final ApplicationReadyEvent event) {
-		txSynchronizer.updateTxDataRows();
+		try {
+			txSynchronizer.updateTxDataRows();
+		} catch (TransactionsNotFoundAtSourceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
