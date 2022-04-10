@@ -17,6 +17,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.greenland.balancemanager.utils.csvconverters.CSVTxAmountConverter;
 import com.greenland.balancemanager.utils.csvconverters.CSVTxBankAccountConverter;
 import com.greenland.balancemanager.utils.csvconverters.CSVTxCategoryConverter;
@@ -59,6 +61,8 @@ public class TxRow {
 	@CsvCustomBindByPosition(position = 2, converter = CSVTxDescriptionConverter.class)
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "txDescriptionId", updatable = false, nullable = false )
+	@JsonIgnoreProperties("description")
+//	@JsonManagedReference
 	private TxDescription txDescription;
 	
 	@CsvBindByPosition(position = 3)
@@ -67,11 +71,13 @@ public class TxRow {
 	@CsvCustomBindByPosition(position = 4, converter = CSVTxCategoryConverter.class)
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "txCategoryId", updatable = false, nullable = false )
+//	@JsonManagedReference
 	private TxCategory txCategory;
 	
 	@CsvCustomBindByPosition(position = 5, converter = CSVTxTagConverter.class)
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "txTagId", updatable = false, nullable = false )
+//	@JsonManagedReference
 	private TxTag txTag;
 	
 	@CsvBindByPosition(position = 6)

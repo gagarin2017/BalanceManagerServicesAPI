@@ -54,6 +54,7 @@ public class TxBankAccount {
 	// One to Many TxRows
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "txBankAccount")
 	@JsonIgnore
+	@Builder.Default
 	private List<TxRow> transactionRows = new ArrayList<>();
 	
 	private LocalDateTime created_At;

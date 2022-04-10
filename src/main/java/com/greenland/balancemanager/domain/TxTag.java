@@ -16,6 +16,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,6 +42,8 @@ public class TxTag {
 	
 	// One to Many TxRows
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "txTag")
+	@Builder.Default
+	@JsonBackReference
 	private List<TxRow> transactionRows = new ArrayList<>();
 	
 	private LocalDateTime created_At;
