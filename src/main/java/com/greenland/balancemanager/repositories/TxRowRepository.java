@@ -8,4 +8,6 @@ import com.greenland.balancemanager.domain.TxRow;
 @Repository
 public interface TxRowRepository extends CrudRepository<TxRow, Long	>{
 
+	Iterable<TxRow> findByTxBankAccountTxBankAccountId(long bankAccountId);
+
 }

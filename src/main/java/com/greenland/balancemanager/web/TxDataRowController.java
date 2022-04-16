@@ -51,7 +51,7 @@ public class TxDataRowController {
 	public Iterable<TxRow> getTransactions(@PathVariable int bankAccountId) {
 		System.out.println("Getting transactions for the account "+bankAccountId);
 		log.debug("Getting transactions for the account ", bankAccountId);
-		Iterable<TxRow> x = txRowService.getAllTransactions();
+		Iterable<TxRow> x = txRowService.getAllBankAccountTransactions(bankAccountId);
 //		return txDataRowService.getAllTxDataRows();
 		return x;
 	}

@@ -16,8 +16,8 @@ public class TxRowService {
 	/**
 	 * @return return all {@link TxDataRow}
 	 */
-	public Iterable<TxRow> getAllTransactions() {
-		return txRowRepository.findAll();
+	public Iterable<TxRow> getAllBankAccountTransactions(final long bankAccountId) {
+		return txRowRepository.findByTxBankAccountTxBankAccountId(bankAccountId);
 	}
 
 }
