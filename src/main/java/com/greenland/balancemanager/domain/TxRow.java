@@ -16,17 +16,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.greenland.balancemanager.utils.csvconverters.CSVTxAmountConverter;
 import com.greenland.balancemanager.utils.csvconverters.CSVTxBankAccountConverter;
-import com.greenland.balancemanager.utils.csvconverters.CSVTxCategoryConverter;
-import com.greenland.balancemanager.utils.csvconverters.CSVTxDescriptionConverter;
-import com.greenland.balancemanager.utils.csvconverters.CSVTxTagConverter;
 import com.opencsv.bean.CsvBindByPosition;
 import com.opencsv.bean.CsvCustomBindByPosition;
-import com.opencsv.bean.CsvDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,8 +44,6 @@ public class TxRow {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long txRowId;
 	
-	@CsvBindByPosition(position = 0, required = true)
-	@CsvDate("dd/MM/yyyy")
 	private LocalDate txDate;
 	
 	@CsvCustomBindByPosition(position = 1, required = true, converter = CSVTxBankAccountConverter.class)
@@ -58,26 +51,18 @@ public class TxRow {
 	@JoinColumn(name = "txBankAccountId", updatable = false, nullable = false )
 	private TxBankAccount txBankAccount;
 	
-	@CsvCustomBindByPosition(position = 2, converter = CSVTxDescriptionConverter.class)
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "txDescriptionId", updatable = false, nullable = false )
-	@JsonIgnoreProperties("description")
-//	@JsonManagedReference
 	private TxDescription txDescription;
 	
-	@CsvBindByPosition(position = 3)
 	private String txMemo;
 	
-	@CsvCustomBindByPosition(position = 4, converter = CSVTxCategoryConverter.class)
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "txCategoryId", updatable = false, nullable = false )
-//	@JsonManagedReference
 	private TxCategory txCategory;
 	
-	@CsvCustomBindByPosition(position = 5, converter = CSVTxTagConverter.class)
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "txTagId", updatable = false, nullable = false )
-//	@JsonManagedReference
 	private TxTag txTag;
 	
 	@CsvBindByPosition(position = 6)
@@ -85,6 +70,9 @@ public class TxRow {
 	
 	@CsvCustomBindByPosition(position = 7, converter = CSVTxAmountConverter.class)
 	private BigDecimal txAmount;
+	
+	@Transient
+	private BigDecimal balance;
 	
 	private LocalDateTime created_At;
 	private LocalDateTime updated_At;

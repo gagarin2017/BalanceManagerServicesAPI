@@ -16,7 +16,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,7 +44,7 @@ public class TxDescription {
 	// One to Many TxRows
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "txDescription")
 	@Builder.Default
-	@JsonBackReference
+	@JsonIgnore
 	private List<TxRow> transactionRows = new ArrayList<>();
 	
 	private LocalDateTime created_At;

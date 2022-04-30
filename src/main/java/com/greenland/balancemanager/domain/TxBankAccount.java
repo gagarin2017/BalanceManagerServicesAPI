@@ -48,8 +48,8 @@ public class TxBankAccount {
 	@Transient
 	private BigDecimal balance;
 	
-	@Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-	private boolean isActive;
+	@Column(nullable = false, columnDefinition = "boolean default true")
+	private boolean active;
 	
 	// One to Many TxRows
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "txBankAccount")

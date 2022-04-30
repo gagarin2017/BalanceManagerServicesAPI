@@ -2,7 +2,6 @@ package com.greenland.balancemanager.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,12 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -47,10 +43,8 @@ public class TxDataRow {
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	private LocalDate date;
 	
-	@NotBlank(message = "Account name is required")
 	private String account;
 	
-	@NotBlank(message = "Category name is required")
 	private String category;
 
 	private BigDecimal debitAmount;
@@ -59,23 +53,22 @@ public class TxDataRow {
 	
 	private boolean isReconsiled;
 	
-	@NotBlank(message = "Is remote true/false must be set")
 	private boolean isRemote;
 	
 	@JsonFormat(pattern = "dd-MM-yyyy")
-	private Date created_At;
+	private LocalDate created_At;
 	
 	@JsonFormat(pattern = "dd-MM-yyyy")
-	private Date updated_At;
+	private LocalDate updated_At;
 	
 	@PrePersist
 	protected void onCreate() {
-		this.created_At = new Date();
+		this.created_At = LocalDate.now();
 	}
 	
 	@PreUpdate
 	protected void onUpdate() {
-		this.updated_At = new Date();
+		this.updated_At = LocalDate.now();
 	}
 	
 	private String description;
