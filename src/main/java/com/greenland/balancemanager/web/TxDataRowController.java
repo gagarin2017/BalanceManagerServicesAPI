@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.greenland.balancemanager.domain.InputTxData;
 import com.greenland.balancemanager.domain.OutputTxData;
 import com.greenland.balancemanager.domain.TxBankAccount;
-import com.greenland.balancemanager.domain.TxDataRow;
 import com.greenland.balancemanager.domain.TxRow;
 import com.greenland.balancemanager.services.AnalyzeTransactionsService;
 import com.greenland.balancemanager.services.TxBankAccountService;
@@ -54,14 +53,15 @@ public class TxDataRowController {
 	
 	@PostMapping(value = "/transactions", consumes = { MediaType.APPLICATION_JSON_VALUE,	MediaType.APPLICATION_XML_VALUE }, 
 			produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<List<TxRow>> saveTransactions(@RequestBody List<TxRow> inputTxData) {
+	public ResponseEntity<Iterable<TxRow>> saveTransactions(@RequestBody List<TxRow> inputTxData) {
 		
 		System.out.println(String.format("Number of txs received: [%d]",
 				inputTxData.size()));
-		
 		inputTxData.forEach(txData -> System.out.println("txData row: "+txData));
+		
+		final Iterable<TxRow> savedData = txRowService.save(inputTxData);
 
-		return new ResponseEntity<List<TxRow>>(inputTxData, HttpStatus.CREATED);
+		return new ResponseEntity<Iterable<TxRow>>(savedData, HttpStatus.CREATED);
 	}
 	
 	@PostMapping(value = "/analyzeTransactions", consumes = { MediaType.APPLICATION_JSON_VALUE,	MediaType.APPLICATION_XML_VALUE }, 
